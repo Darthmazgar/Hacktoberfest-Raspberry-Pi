@@ -9,8 +9,9 @@
 # Run: python3 pong.py
 #
 # Author: Alec Matthews
+#       : Iain Mclaughlan
 # 
-# Date: 10/01/17
+# Date: 4/10/18
 
 import pygame, sys, random
 from pygame.locals import*
@@ -28,6 +29,8 @@ def randSpeed():
      speed = random.randint(-2, 7)
      return speed
 
+def print_score(p_s, c_s):
+     print("Player %d:%d Computer" % (p_s, c_s))
 
 pygame.init()
 mainClock = pygame.time.Clock()
@@ -35,10 +38,13 @@ mainClock = pygame.time.Clock()
 WINDOWWIDTH = 800
 WINDOWHEIGHT = 500
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), 0, 32)
-pygame.display.set_caption('pong')
+pygame.display.set_caption('Pong')
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+
+p_s = 0  # Set initial scores
+c_s = 0 
 
 ball = {'rect':pygame.Rect(390, 240, 20, 20),'dir':None}
 paddlePlayer= pygame.Rect(40, 185, 20, 130)
@@ -156,8 +162,13 @@ while True:
           direction = ballDirection()
           if direction == 1:
                ballLeft = True
+               c_s += 1
+               print_score(p_s, c_s)
+               
           elif direction == 0:
                ballLeft = False
+               c_s += 1
+               print_score(p_s, c_s)
           if ballLeft == True:
                ball['dir'] = LEFT
           elif ballLeft == False:
@@ -169,7 +180,11 @@ while True:
           direction = ballDirection()
           if direction == 1:
                ballLeft = True
+               p_s += 1
+               print_score(p_s, c_s)
           elif direction == 0:
+               p_s += 1
+               print_score(p_s, c_s)
                ballLeft = False
           if ballLeft == True:
                ball['dir'] = LEFT
